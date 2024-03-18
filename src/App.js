@@ -1,7 +1,7 @@
 /*
 * Movie App for SimpliLearn Phase 1 React Assessment
 * The following dependencies need to be installed to run this app:
-* npm install react react-bootstram redux react-redux axios
+* npm install react react-bootstram redux react-redux axios test
 */
 
 import React from "react";
