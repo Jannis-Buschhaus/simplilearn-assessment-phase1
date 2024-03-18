@@ -52,7 +52,7 @@ export default function Main() {
                                             <b>Year: </b>{movie.Year}<br />
                                             <b>Imdb Rating: </b>{movie.imdbRating + "/10"}
                                         </Card.Text>
-                                        <Button variant="primary">Show Details</Button>
+                                        <Button variant="danger">Show Details</Button>
                                     </Card.Body>
                                 </Card>
                             )

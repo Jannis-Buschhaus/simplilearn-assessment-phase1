@@ -63,7 +63,7 @@ export default function Header() {
                 <div style={{ width: "30%" }}>
                     <Form.Control onInput={(event) => handleInput(event.target.value)} type="text" id="searchTerm" placeholder='Search movie titles by name...' />
                 </div>
-                <Button type="submit">Search</Button>
+                <Button variant="danger" type="submit">Search</Button>
             </div>
         </Form >
 
