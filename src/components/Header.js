@@ -75,7 +75,7 @@ export default function Header() {
                 <Button style={{width: "150px"}} variant="danger" type="submit" disabled={movieState.fetching == "fetching"} >
                     {movieState.fetching == "fetching" ? "Loading" : "Search"} 
                 </Button>
-                <a style={{ userSelect: "none", cursor: "pointer"}} onClick={(e)=>{handleFilterClick()}} ><img src={FilterIcon} style={{width: "30px"}} />Filters</a>
+                <a style={{ userSelect: "none", cursor: "pointer"}} onClick={(e)=>{handleFilterClick()}} ><img src={FilterIcon} style={{width: "30px"}} /> Filters</a>
             </div>
         </Form >
     )

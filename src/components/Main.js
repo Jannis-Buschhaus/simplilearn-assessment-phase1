@@ -1,6 +1,6 @@
 // Importing modules from react, react-redux and react-bootstrap.
-import React from 'react'
-import { useSelector } from 'react-redux';
+import React, {useEffect, useState} from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Alert from 'react-bootstrap/Alert';
@@ -9,13 +9,17 @@ import Spinner from 'react-bootstrap/Spinner';
 
 //Import Components
 import Filters from './Filters';
+import MovieDetails from './MovieDetails';
 
 // Main component
 export default function Main() {
 
+    const dispatch = useDispatch();
+
     // Using useSelector to access state from the Redux store
     const movieState = useSelector(state => state.movies);
     const filterState = useSelector(state => state.filters);
+    const detailState = useSelector(state => state.details);
 
     //Show an Error message, if There was an Error returned during fetch attempt. In case the API call was successfull, show the recent search term.
     const showAlert = () => {
@@ -40,12 +44,39 @@ export default function Main() {
         }
     }
 
-    //Map through the Array of movies and retrun a Bootstrap card for each movie. Return "No data." in case the array is not yet present.
-    const showResults = (filter) => {
-        if(movieState.fetching != "fetching"){
+    const showDetails = (btnKey)=> {
+        let details = movieState.apiResult.Search.find(
+            (item)=> {
+                return item.imdbID == btnKey;
+            }
+        );
+        dispatch({type: "showDetails", payload: details});
+    }
+
+    //Map through the Array of movies and retrun a Bootstrap card for each movie. Return a Spinner animation in case the array is not yet present.
+    const showResults = (genreList, ratingFilter) => {
+        if (movieState.fetching != "fetching") {
             try {
                 let shownMovies = [];
-                filter ? shownMovies = movieState.apiResult.Search.filter((item)=>{return(item.Genre.toLowerCase().includes(filter.toLowerCase()))}) : shownMovies = movieState.apiResult.Search;
+                shownMovies = movieState.apiResult.Search.filter(
+                    (item) => {
+                        if (genreList.length > 0) {
+                            for (let genreFilter of genreList) {
+                                //console.log(item.Title+" -> "+item.Genre+" includes "+genreFilter+"? "+String(item.Genre.toLowerCase().includes(genreFilter.toLowerCase())));
+                                if (item.Genre.toLowerCase().includes(genreFilter.toLowerCase()) && Number(item.imdbRating) >= ratingFilter) {
+                                    return true;
+                                }
+                            }
+                        }
+                        else {
+                            if (Number(item.imdbRating) >= ratingFilter) {
+                                return true;
+                            }
+                        }
+                        return false;
+
+                    }
+                )
                 return (shownMovies.map(
                     (movie) => {
                         if (movie.Type == "movie") {
@@ -56,10 +87,10 @@ export default function Main() {
                                         <Card.Title>{movie.Title}</Card.Title>
                                         <Card.Text>
                                             <b>Year: </b>{movie.Year}<br />
-                                             <b>Genre:</b> {movie.Genre}<br />
+                                            <b>Genre:</b> {movie.Genre}<br />
                                             <b>Imdb Rating: </b>{movie.imdbRating + "/10"}
                                         </Card.Text>
-                                        <Button variant="danger">Show Details</Button>
+                                        <Button id={movie.imdbID} onClick={(event)=>showDetails(event.target.id)} variant="danger">Show Details</Button>
                                     </Card.Body>
                                 </Card>
                             )
@@ -71,7 +102,7 @@ export default function Main() {
                 return ("")
             }
         }
-        else{
+        else {
             return <Spinner animation="border" variant="warning" />
         }
     }
@@ -80,9 +111,10 @@ export default function Main() {
     return (
         <div>
             <Filters />
+            <MovieDetails show={detailState.show} />
             {showAlert()}
             <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
-                {showResults(filterState.genre)}
+                {showResults(filterState.selectedGenres, filterState.ratingMin)}
             </div>
         </div>
     )
