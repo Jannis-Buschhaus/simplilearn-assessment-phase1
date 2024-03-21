@@ -1,11 +1,13 @@
-//Import the necessary libraries
+// Import the necessary libraries for Redux state management.
 import { combineReducers } from "redux";
+
+// Import all reducers to combine.
 import MovieReducer from "./MovieReducer";
 import FilterReducer from "./FilterReducer";
 import DetailReducer from "./DetailReducer";
 
-//Combine the reducer functions into a rootReducer
-const rootReducer=combineReducers({
+// Combine all reducers into the rootReducer
+const rootReducer = combineReducers({
     movies: MovieReducer,
     filters: FilterReducer,
     details: DetailReducer
