@@ -4,7 +4,8 @@ const initialState = {
     error: "",
     apiResult: {},
     searchTerm: "",
-    lastTerm: ""
+    lastTerm: "",
+    alert: false
 };
 
 //Create the reducer function to update the state of the app
@@ -22,6 +23,10 @@ const MovieReducer = (state = initialState, action) => {
             return { ...state, error: action.payload, apiResult: {} };
         case "userInput":
             return { ...state, searchTerm: action.payload };
+        case "showAlert":
+            return { ...state, alert: true };
+        case "clearAlert":
+            return { ...state, alert: false };
         default:
             return state;
     }

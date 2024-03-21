@@ -4,7 +4,8 @@ import axios from 'axios'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button'
 import { useDispatch, useSelector } from 'react-redux';
-import FilterIcon from '../media/filter.svg'
+import { Routes, Route, useNavigate } from 'react-router-dom';
+import FilterIcon from '../media/filter.svg';
 
 // get API Key from .env File
 const API_KEY=process.env.REACT_APP_API_KEY
@@ -19,12 +20,15 @@ export default function Header() {
     const movieState = useSelector(state => state.movies);
     const dispatch = useDispatch();
 
+    const navigate = useNavigate();
+
     /**
     * handleSearch()
     * 1. Fetch an Array of movies from http://www.omdbapi.com/
     * 2. For each movie, get its details and enrich the array of movies with those details.
     */
     const handleSearch = async () => {
+        navigate("/movies/");
         try {
             dispatch({ type: "startFetch", payload: movieState.searchTerm });
             let apiResult = await axios.get(`http://www.omdbapi.com/?s=${movieState.searchTerm}&type=movie&apikey=${API_KEY}`);
@@ -68,14 +72,18 @@ export default function Header() {
     return (
         <Form onSubmit={(e) => { e.preventDefault(); handleSearch() }}>
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1em" }}>
-                <Form.Label className="h1" htmlFor="searchTerm">Movie Database</Form.Label>
+                    <Form.Label className="h1" htmlFor="searchTerm"><a style={{cursor: "pointer"}} onClick={()=>navigate("/home/")}>Movie Database</a></Form.Label>
                 <div style={{ width: "30%" }}>
                     <Form.Control onInput={(event) => handleInput(event.target.value)} type="text" id="searchTerm" placeholder='Search movie titles by name...' />
                 </div>
                 <Button style={{width: "150px"}} variant="danger" type="submit" disabled={movieState.fetching == "fetching"} >
                     {movieState.fetching == "fetching" ? "Loading" : "Search"} 
                 </Button>
-                <a style={{ userSelect: "none", cursor: "pointer"}} onClick={(e)=>{handleFilterClick()}} ><img src={FilterIcon} style={{width: "30px"}} /> Filters</a>
+                <Routes>
+                <Route path="movies" element={<a style={{ userSelect: "none", cursor: "pointer"}} onClick={(e)=>{handleFilterClick()}} ><img src={FilterIcon} style={{width: "30px"}} /> Filters</a>}>
+                
+                </Route>
+                </Routes>
             </div>
         </Form >
     )

@@ -1,15 +1,31 @@
 // Importing modules from react, react-redux and react-bootstrap.
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import Alert from 'react-bootstrap/Alert';
 import Spinner from 'react-bootstrap/Spinner';
 // for MovieDetails: https://react-bootstrap.netlify.app/docs/components/modal -> See Vertically centered -> import Modal from 'react-bootstrap/Modal';
 
 //Import Components
 import Filters from './Filters';
 import MovieDetails from './MovieDetails';
+import FetchAlert from './FetchAlert';
+
+const alertMsg = (()=>{
+    function success(msg){
+        return <><b>Success:</b> Showing reults for "{msg}"</>;
+    }
+    function error(msg){
+        return `An error occured: ${msg}`;
+    }
+    return(
+        {
+            success: success,
+            error, error
+        }
+    )
+}
+)();
 
 // Main component
 export default function Main() {
@@ -21,29 +37,7 @@ export default function Main() {
     const filterState = useSelector(state => state.filters);
     const detailState = useSelector(state => state.details);
 
-    //Show an Error message, if There was an Error returned during fetch attempt. In case the API call was successfull, show the recent search term.
-    const showAlert = () => {
-        if (movieState.error) {
-            return (
-                <div style={{ position: "relative", top: "0" }}>
-                    <Alert key="FetchResult" variant="danger">
-                        An error occured:  "{movieState.error}"
-                    </Alert>
-                </div>
-
-            )
-        }
-        else if (movieState.apiResult.Search) {
-            return (
-                <div style={{ position: "relative", top: "0" }}>
-                    <Alert key="FetchResult" variant="success">
-                        Success: showing results for <b>"{movieState.lastTerm}"</b>
-                    </Alert>
-                </div >
-            )
-        }
-    }
-
+    //handle show Details button click
     const showDetails = (btnKey)=> {
         let details = movieState.apiResult.Search.find(
             (item)=> {
@@ -107,15 +101,37 @@ export default function Main() {
         }
     }
 
+    //Trigger an Alert Message, once API Fetch ends in either a success or an error. Close alter message after 2 Seconds.
+    useEffect(
+        ()=>{
+            if(movieState.fetching == "not_fetching" && (movieState.error || movieState.apiResult.Search)){
+                dispatch({type: "showAlert"});
+            }
+            const timeoutID = setTimeout(
+                ()=>{
+                    dispatch({type: "clearAlert"});
+                }, 2000
+            );
+            return(
+                ()=>clearTimeout(timeoutID)
+            );
+        }, [movieState.apiResult, movieState.error]
+    );
+
     // Render Alert and Search Results
     return (
-        <div>
+        <>
             <Filters />
             <MovieDetails show={detailState.show} />
-            {showAlert()}
+
+            <FetchAlert 
+                keyName="FetchResult" 
+                show={movieState.alert} 
+                msg={movieState.error ? alertMsg.error(movieState.error) : alertMsg.success(movieState.lastTerm)} 
+                variant={movieState.error ? "danger" : "success"} />
             <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
                 {showResults(filterState.selectedGenres, filterState.ratingMin)}
             </div>
-        </div>
+        </>
     )
 }

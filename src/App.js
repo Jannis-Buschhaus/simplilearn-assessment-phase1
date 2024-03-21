@@ -5,6 +5,7 @@
 */
 
 import React from "react";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
 
 //Bootstrap Components
 import Container from 'react-bootstrap/Container';
@@ -15,11 +16,13 @@ import Col from 'react-bootstrap/Col';
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Main from "./components/Main";
+import Home from "./components/Home";
 
 //App component
 function App() {
   return (
     <>
+    <BrowserRouter>
       <Container className="bg-dark text-warning text-center" style={{minHeight: "100vh"}} fluid>
         <Row>
           <Col >
@@ -29,7 +32,11 @@ function App() {
         <Row className="bg-white text-dark" style={{minHeight: "90vh"}}>
           <Col></Col>
           <Col xs="8">
-            <Main />
+            <Routes>
+              <Route path="/" element={<Navigate replace to={"/home/"} />}></Route>
+              <Route path={"/home/"} element={<Home />}></Route>
+              <Route path={"/movies/"} element={<Main />}></Route>
+            </Routes>
           </Col>
           <Col></Col>
         </Row>
@@ -39,6 +46,7 @@ function App() {
           </Col>
         </Row>
       </Container>
+      </BrowserRouter>
     </>
   );
 }
