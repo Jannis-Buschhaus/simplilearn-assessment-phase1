@@ -101,7 +101,7 @@ export default function Main() {
         }
     }
 
-    //Trigger an Alert Message, once API Fetch ends in either a success or an error. Close alter message after 2 Seconds.
+    //Trigger an Alert Message, once API Fetch ends in either a success or an error. Close alert message after 2 Seconds with setTimeout().
     useEffect(
         ()=>{
             if(movieState.fetching == "not_fetching" && (movieState.error || movieState.apiResult.Search)){
@@ -112,6 +112,7 @@ export default function Main() {
                     dispatch({type: "clearAlert"});
                 }, 2000
             );
+            
             return(
                 ()=>clearTimeout(timeoutID)
             );
