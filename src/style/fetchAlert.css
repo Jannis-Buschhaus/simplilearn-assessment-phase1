@@ -1,0 +1,13 @@
+.alertContainer{
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    z-index: 7;
+    position: absolute;
+    top: 65px;
+    left: 0;
+    opacity: 0.9;
+}
+.alertStyle{
+    width: 40%;
+}

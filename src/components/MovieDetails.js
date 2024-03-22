@@ -8,6 +8,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
+// Importing stylesheets
+import '../style/movieDetails.css'
+
 // The movieDetails component
 export default function MovieDetails(props) {
     //Access the dispatch function to update the state of the app.
@@ -37,33 +40,33 @@ export default function MovieDetails(props) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <div style={{ display: "flex" }}>
+                <div className='detailContainer'>
                     <table border="0">
                         <tbody>
                             <tr>
-                                <td style={{ display: "flex", minWidth: "5vw" }}><b>Actors:</b></td><td>{detailState.details.Actors}</td>
+                                <td><b>Actors:</b></td><td>{detailState.details.Actors}</td>
                             </tr>
                             <tr>
-                                <td style={{ display: "flex" }}><b>Director:</b></td><td>{detailState.details.Director}</td>
+                                <td><b>Director:</b></td><td>{detailState.details.Director}</td>
                             </tr>
                             <tr>
-                                <td style={{ display: "flex" }}><b>Year:</b></td><td>{detailState.details.Year}</td>
+                                <td><b>Year:</b></td><td>{detailState.details.Year}</td>
                             </tr>
                             <tr>
-                                <td style={{ display: "flex" }}><b>Genre:</b></td><td>{detailState.details.Genre}</td>
+                                <td><b>Genre:</b></td><td>{detailState.details.Genre}</td>
                             </tr>
                             <tr>
-                                <td style={{ display: "flex" }}><b>Rating:</b></td><td>{detailState.details.imdbRating}</td>
+                                <td><b>Rating:</b></td><td>{detailState.details.imdbRating}</td>
                             </tr>
                             <tr>
-                                <td style={{ display: "flex" }}><b>Country:</b></td><td>{detailState.details.Country}</td>
+                                <td><b>Country:</b></td><td>{detailState.details.Country}</td>
                             </tr>
                             <tr>
-                                <td style={{ display: "flex" }}><b>Plot:</b></td><td>{detailState.details.Plot}</td>
+                                <td><b>Plot:</b></td><td>{detailState.details.Plot}</td>
                             </tr>
                         </tbody>
                     </table>
-                    <img style={{ height: "250px", marginLeft: "15px" }} src={detailState.details.Poster} />
+                    <img className='poster' src={detailState.details.Poster} />
                 </div>
             </Modal.Body>
             <Modal.Footer>

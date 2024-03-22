@@ -12,6 +12,9 @@ import Filters from './Filters';
 import MovieDetails from './MovieDetails';
 import FetchAlert from './FetchAlert';
 
+// Importing stylesheets
+import '../style/main.css'
+
 //Create an object to render the Alert message to be displayed after completing the API call
 const alertMsg = (() => {
     function success(msg) {
@@ -76,7 +79,7 @@ export default function Main() {
                     (movie) => {
                         if (movie.Type == "movie") {
                             return (
-                                <Card key={movie.imdbID} style={{ width: '18rem', margin: "20px" }}>
+                                <Card key={movie.imdbID} className='cardStyle'>
                                     <Card.Img variant="top" src={movie.Poster == "N/A" ? "/media/no_poster.jpg" : movie.Poster} />
                                     <Card.Body>
                                         <Card.Title>{movie.Title}</Card.Title>
@@ -131,7 +134,7 @@ export default function Main() {
                 show={movieState.alert}
                 msg={movieState.error ? alertMsg.error(movieState.error) : alertMsg.success(movieState.lastTerm)}
                 variant={movieState.error ? "danger" : "success"} />
-            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
+            <div className='cardContainer'>
                 {showResults(filterState.selectedGenres, filterState.ratingMin)}
             </div>
         </>

@@ -11,6 +11,9 @@ import Button from 'react-bootstrap/Button';
 //Importing the filter icon
 import FilterIcon from '../media/filter.svg';
 
+// Importing stylesheets
+import '../style/header.css'
+
 // get API Key from .env File
 const API_KEY = process.env.REACT_APP_API_KEY;
 
@@ -73,9 +76,9 @@ export default function Header() {
     //Return the Header for the page
     return (
         <Form onSubmit={(e) => { e.preventDefault(); handleSearch() }}>
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1em" }}>
+            <div className='headerContainer'>
                 <Form.Label className="h1" htmlFor="searchTerm"><a style={{ cursor: "pointer" }} onClick={() => navigate("/home/")}>Movie Database</a></Form.Label>
-                <div style={{ width: "30%" }}>
+                <div className='inputField'>
                     <Form.Control autocomplete="off" required onInput={(event) => handleInput(event.target.value)} type="text" id="searchTerm" placeholder='Search movie titles by name...' />
                 </div>
                 <Button style={{ width: "150px" }} variant="danger" type="submit" disabled={movieState.fetching == "fetching"} >

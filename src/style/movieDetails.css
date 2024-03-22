@@ -1,0 +1,18 @@
+.detailContainer, .detailContainer tr{
+    display: flex;   
+}
+
+.detailContainer td{
+    min-width: 5vw;
+}
+
+@media screen and (max-width: 990px) {
+    .detailContainer tr{
+        flex-wrap: wrap;
+    }
+}
+
+.poster{
+    height: 250px;
+    margin-left: 15px;
+}

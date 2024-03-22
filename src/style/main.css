@@ -1,0 +1,44 @@
+.cardContainer{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.cardStyle{
+    width: 18rem;
+    margin: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.cardStyle:hover{
+    position: relative;
+    animation-name: cardHover;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+.cardStyle:not(:hover){
+    position: relative;
+    animation-name: cardHoverEnd;
+    animation-duration: 0.5s;
+}
+
+@keyframes cardHover {
+    from{
+        top: 0px;
+    }
+    to{
+        top: -5px;
+    }
+}
+@keyframes cardHoverEnd {
+    from{
+        top: -5px;
+    }
+    to{
+        top: 0px;
+    }
+}
+
+@media screen and (max-width: 990px) {
+    .cardStyle{
+        margin: 10px;
+    }
+}
