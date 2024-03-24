@@ -13,7 +13,6 @@ export default function Home() {
             <h1 className='bg-info'>Welcome to my Movie API App</h1>
             <h4>This is my frontend project for the Simplilearn Phase 1 Assessment.</h4>
             <main>
-                <p>
                     <dl>
                         <dt>How it works</dt>
                         <dd>
@@ -27,8 +26,6 @@ export default function Home() {
                             When clicking the filter icon next to the "Search" Button, a side bar component is opened, which lets the user apply further filters on the retrieved search result based on rating and genre.
                         </dd>
                     </dl>
-                </p>
-                <p>
                     <dl>
                         <dt>Technologies used</dt>
                         <dd>
@@ -45,7 +42,6 @@ export default function Home() {
                             </ul>
                         </dd>
                     </dl>
-                </p>
                 <p>
                     Created by Jannis Robin Buschhaus
                 </p>

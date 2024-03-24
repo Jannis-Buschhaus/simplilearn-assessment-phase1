@@ -33,6 +33,8 @@ const FilterReducer = (state = initialState, action) => {
             // When the 'removeGenreFilter' action is dispatched, remove the genre from the payload from the 'selectedGenres' array.
             const reducedFilterArray = state.selectedGenres.filter(item => item !== action.payload);
             return { ...state, selectedGenres: reducedFilterArray };
+        case "clearFilter":
+            return { ...state, selectedGenres: [] };
         default:
             return state;
     }

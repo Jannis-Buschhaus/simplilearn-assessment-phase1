@@ -1,5 +1,5 @@
 // Importing the neccessary libraries
-import React from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { Routes, Route, useNavigate } from 'react-router-dom';
@@ -75,11 +75,11 @@ export default function Header() {
 
     //Return the Header for the page
     return (
-        <Form onSubmit={(e) => { e.preventDefault(); handleSearch() }}>
+        <Form onSubmit={(e) => { e.preventDefault(); dispatch({ type: "clearFilter" }); handleSearch() }}>
             <div className='headerContainer'>
                 <Form.Label className="h1" htmlFor="searchTerm"><a style={{ cursor: "pointer" }} onClick={() => navigate("/home/")}>Movie Database</a></Form.Label>
                 <div className='inputField'>
-                    <Form.Control autocomplete="off" required onInput={(event) => handleInput(event.target.value)} type="text" id="searchTerm" placeholder='Search movie titles by name...' />
+                    <Form.Control autoComplete="off" required onInput={(event) => handleInput(event.target.value)} type="text" id="searchTerm" placeholder='Search movie titles by name...' />
                 </div>
                 <Button style={{ width: "150px" }} variant="danger" type="submit" disabled={movieState.fetching == "fetching"} >
                     {movieState.fetching == "fetching" ? "Loading" : "Search"}
