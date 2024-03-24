@@ -50,7 +50,7 @@ export default function Filters() {
                 {filterState.availableGenres.map(
                     (genre) => {
                         return (
-                            <Form.Check onChange={(event) => handleCheckBoxChange(event)} style={{ userSelect: "none" }} key={genre} type="checkbox" id={genre} label={genre} />
+                            <Form.Check checked={filterState.selectedGenres.includes(genre)} onChange={(event) => handleCheckBoxChange(event)} style={{ userSelect: "none" }} key={genre} type="checkbox" id={genre} label={genre} />
                         )
                     }
                 )}
